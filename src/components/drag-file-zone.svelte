@@ -68,7 +68,7 @@
 </script>
 
 <div
-    class={dragEnterStyleClass}
+    class={dragEnterStyleClass+" cursor-pointer"}
     aria-grabbed={false}
     aria-label="上傳區塊"
     draggable="true"
