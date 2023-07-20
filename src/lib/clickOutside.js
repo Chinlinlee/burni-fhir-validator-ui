@@ -12,7 +12,6 @@ export const clickOutside = (node, callback) => {
      */
     const handleClick = (event) => {
         if (!event?.target) return;
-        console.log(node);
         if (node && !node.contains(/**@type {Node}*/(event.target)) && !event.defaultPrevented) {
             callback();
         }
