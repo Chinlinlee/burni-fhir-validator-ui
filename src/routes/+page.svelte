@@ -1,5 +1,5 @@
 <script>
-    import { JSONEditor, Mode } from "svelte-jsoneditor";
+    import { JSONEditor, Mode, createAjvValidator } from "svelte-jsoneditor";
     import { Button, Alert, Fileupload } from "flowbite-svelte";
     import axios from "axios";
     import { validatorApiConfig } from "../stores/validator-api.config";
@@ -8,16 +8,42 @@
     import { fade, slide } from "svelte/transition";
     import AdvancedOptions from "../components/advanced-options.svelte";
 
+
     let content = {
         text: ""
     };
     /** @type {FileList | undefined}*/
     let resourceFileList;
+    let isDisabledValidateBtn = true;
+
+    const jsonSchema = {
+        type: "object",
+        properties: {
+            resourceType: {
+                type: "string",
+            }
+        },
+        required: ["resourceType"]
+    };
+
+    const jsonValidator = createAjvValidator({
+        schema: jsonSchema
+    });
 
     $: validationErrorMessage = "";
 
     $: if (resourceFileList?.length) {
         loadResourceFromFile();
+    }
+
+    /**
+     * 
+     * @param {import("svelte-jsoneditor").Content} updatedContent
+     * @param {import("svelte-jsoneditor").Content} previousContent
+     * @param {import("svelte-jsoneditor").OnChangeStatus} param2
+     */
+    function onJsonEditorContentChange(updatedContent, previousContent, { contentErrors, patchResult }) {
+        isDisabledValidateBtn = contentErrors || !content.text ? true : false;
     }
 
     async function loadResourceFromFile() {
@@ -61,10 +87,6 @@
         validationErrorMessage = "";
         resourceFileList = undefined;
     }
-
-    onMount(() => {
-        console.log("config", $validatorApiConfig);
-    });
 </script>
 
 <div class="flex w-full">
@@ -74,7 +96,7 @@
         <h1 class="text-5xl font-extrabold dark:text-white pb-2">Burni FHIR Validator</h1>
         <div class="border p-2 lg:p-8 xl:p-12 mb-4">
             <div class="json-editor mb-3">
-                <JSONEditor bind:content mode={Mode.text} />
+                <JSONEditor bind:content mode={Mode.text} validator={jsonValidator} onChange={onJsonEditorContentChange}/>
             </div>
 
             <label
@@ -86,7 +108,7 @@
             <div class="op-buttons mb-3">
                 <Button
                     class="btn-base bg-primary-600 hover:bg-primary-700 focus:ring-primary-300"
-                    on:click={doValidate}>驗證</Button
+                    on:click={doValidate} disabled={isDisabledValidateBtn} >驗證</Button
                 >
                 <Button
                     class="btn-base bg-primary-600 hover:bg-primary-700 focus:ring-primary-300"
