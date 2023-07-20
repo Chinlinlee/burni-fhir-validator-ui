@@ -37,6 +37,7 @@
         "remeda": "^1.24.0",
         "svelte-jsoneditor": "^0.17.8",
         "tailwind-merge": "^1.13.2",
+        "uid": "^2.0.2",
         "url-join": "^5.0.0"
     }
 }
