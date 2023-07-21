@@ -26,12 +26,13 @@
     let igVersionSearch = "";
     /** @type {Promise<any> | undefined}*/
     let getIgVersionPromise;
+
     let openLoadingModal = false;
+    let openSuccessLoadedModal = false;
 
     onMount(() => {
         filteredIgs = $igsFromRegistry;
     });
-
 
     /**
      *
@@ -112,7 +113,8 @@
                 id: selectedIgVersion?.id,
                 version: selectedIgVersion?.version
             });
-            // openLoadingModal = false;
+            openLoadingModal = false;
+            openSuccessLoadedModal = true;
         } catch (e) {
             throw e;
         }
@@ -156,7 +158,7 @@
     {/if}
 
     {#if selectedIgVersion}
-        <Button on:click={() => doLoadIgFromRegistry()}>roger hi</Button>
+        <Button on:click={() => doLoadIgFromRegistry()}>讀取</Button>
     {/if}
 </div>
 
@@ -164,14 +166,18 @@
     <div class="text-center">
         <Spinner size={"16"} />
         <span class="block">Loading...</span>
+    </div>
+</Modal>
 
+<Modal open={openSuccessLoadedModal}>
+    <div class="flex flex-wrap text-center justify-center align-middle">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            class="w-20 h-20"
         >
             <path
                 id="check-path"
@@ -180,6 +186,9 @@
                 d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
         </svg>
+        <span class="m-2 block w-full">讀取 IG {selectedIgName}-{selectedIgVersionText} 成功</span>
+        <Button on:click={() => openSuccessLoadedModal = false}>OK</Button>
+
     </div>
 </Modal>
 
