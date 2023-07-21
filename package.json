@@ -35,6 +35,7 @@
         "flowbite": "^1.7.0",
         "flowbite-svelte": "^0.40.1",
         "remeda": "^1.24.0",
+        "svelte-highlight": "^7.3.0",
         "svelte-jsoneditor": "^0.17.8",
         "tailwind-merge": "^1.13.2",
         "uid": "^2.0.2",
