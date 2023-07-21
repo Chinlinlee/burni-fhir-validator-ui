@@ -1,6 +1,6 @@
 <script>
     import { Accordion, AccordionItem, Tabs, TabItem, List } from "flowbite-svelte";
-    import CloseButton from "./close-button.svelte";
+    import CloseButton from "./common/close-button.svelte";
     import { fade } from "svelte/transition";
     import DragFileZone from "./drag-file-zone.svelte";
     import FileCard from "./file-card.svelte";

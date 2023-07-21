@@ -6,7 +6,7 @@
     import { igsFromRegistry } from "../stores/registry-ig";
     import urlJoin from "url-join";
     import { fade } from "svelte/transition";
-    import CustomSelect from "./custom-select.svelte";
+    import CustomSelect from "./common/custom-select.svelte";
 
     let selectedIgName = "Click to Select IG";
     /** @type {import("../models/igInfo").Ig | undefined} */
