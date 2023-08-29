@@ -178,6 +178,7 @@
                         mode={Mode.text}
                         validator={jsonValidator}
                         onChange={onJsonEditorContentChange}
+                        escapeControlCharacters={true}
                     />
                 </div>
 
