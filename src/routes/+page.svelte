@@ -85,7 +85,7 @@
                 pageState.set("result");
                 openLoadingModal = false;
             } catch (e) {
-                if (e instanceof axios.AxiosError) {
+                                if (e instanceof axios.AxiosError) {
                     console.error(e.message);
                     validationErrorMessage = e.message;
                 } else {
@@ -94,6 +94,11 @@
                 }
             }
         }
+    }
+
+    async function backToValidationResult() {
+        pageState.set("prepare");
+        history.replaceState("", "", `${location.pathname}${location.search}`);
     }
 
     async function reset() {
@@ -116,7 +121,7 @@
                     <button
                         type="button"
                         class="inline-flex items-center justify-center h-8 px-1 bg-gray-100 rounded-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800 w-full"
-                        on:click={() => pageState.set("prepare")}
+                        on:click={() => backToValidationResult()}
                         id="back-to-previous"
                     >
                         <svg
