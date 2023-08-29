@@ -85,7 +85,8 @@
                 pageState.set("result");
                 openLoadingModal = false;
             } catch (e) {
-                                if (e instanceof axios.AxiosError) {
+                openLoadingModal = false;
+                if (e instanceof axios.AxiosError) {
                     console.error(e.message);
                     validationErrorMessage = e.message;
                 } else {
