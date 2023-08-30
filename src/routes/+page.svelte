@@ -62,10 +62,10 @@
                 if (file.type === "application/json") {
                     file.text().then(
                         (v) =>
-                            (content = {
+                            content = {
                                 ...content,
-                                text: v
-                            })
+                                text: JSON.stringify(JSON.parse(v), null, 4)
+                            }
                     );
                 }
             }
@@ -73,15 +73,16 @@
     }
 
     async function doValidate() {
+        let contentJson = JSON.parse(content.text);
         title = `Burni FHIR Validator - Result`;
         validationErrorMessage = "";
-        validatedResourceText = R.clone(content.text);
+        validatedResourceText = R.clone(JSON.stringify(contentJson, null, 4));
         if ($validatorApiConfig.endpoint) {
             try {
                 openLoadingModal = true;
                 let { data } = await axios.post(
                     urlJoin($validatorApiConfig.endpoint, "validate"),
-                    JSON.parse(content.text)
+                    contentJson
                 );
                 operationOutcome = data;
                 pageState.set("result");
