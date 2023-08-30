@@ -48,6 +48,10 @@
                     let codeLine = getIssueCodeLine(issue);
 
                     if (codeLine >= 0) {
+                        if (!tr[codeLine - 1]) {
+                            console.error("Can not found tr code line" + codeLine);
+                            continue;
+                        };
                         let tds = tr[codeLine - 1].querySelectorAll("td");
 
                         tds.forEach((td) => {
