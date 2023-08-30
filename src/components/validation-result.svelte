@@ -59,6 +59,8 @@
                                 td?.classList.add("bg-red-200");
                             } else if (issue.severity === "warning") {
                                 td?.classList.add("bg-orange-200");
+                            } else if (issue.severity === "information") {
+                                td?.classList.add("bg-blue-200");
                             }
                         });
                     }
