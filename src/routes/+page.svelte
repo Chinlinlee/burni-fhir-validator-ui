@@ -10,6 +10,7 @@
     import ValidationResult from "../components/validation-result.svelte";
     import * as R from "remeda";
 
+    let title = "Burni FHIR Validator";
     let content = {
         text: ""
     };
@@ -72,6 +73,7 @@
     }
 
     async function doValidate() {
+        title = `Burni FHIR Validator - Result`;
         validationErrorMessage = "";
         validatedResourceText = R.clone(content.text);
         if ($validatorApiConfig.endpoint) {
@@ -98,6 +100,13 @@
     }
 
     async function backToValidationResult() {
+        title = "Burni FHIR Validator - Result";
+        pageState.set("result");
+        history.replaceState("", "", `${location.pathname}${location.search}`);
+    }
+
+    async function backToInputPage() {
+        title = "Burni FHIR Validator";
         pageState.set("prepare");
         history.replaceState("", "", `${location.pathname}${location.search}`);
     }
@@ -109,6 +118,10 @@
         validationErrorMessage = "";
     }
 </script>
+
+<svelte:head>
+    <title>{title}</title>
+</svelte:head>
 
 <div class="flex w-full">
     <div
@@ -122,7 +135,7 @@
                     <button
                         type="button"
                         class="inline-flex items-center justify-center h-8 px-1 bg-gray-100 rounded-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800 w-full"
-                        on:click={() => backToValidationResult()}
+                        on:click={() => backToInputPage()}
                         id="back-to-previous"
                     >
                         <svg
@@ -152,7 +165,7 @@
                     <button
                         type="button"
                         class="inline-flex items-center justify-center h-8 px-1 bg-gray-100 rounded-lg dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-800 w-full"
-                        on:click={() => pageState.set("result")}
+                        on:click={() => backToValidationResult()}
                         id="back-to-previous"
                     >
                         <svg
