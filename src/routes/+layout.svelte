@@ -10,10 +10,12 @@
 
     onMount(async () => {
         const configModules = import.meta.glob("../configs/*.config*.js");
-        let config = await configModules["../configs/validator-api.config.example.js"]();
-        if (configModules["../config/validator-api.config.js"]) {
+        let config;
+        if (configModules["../configs/validator-api.config.js"]) {
             config = await configModules["../configs/validator-api.config.js"]();
-        } 
+        } else {
+            config = await configModules["../configs/validator-api.config.example.js"]();
+        }
         //@ts-ignore
         validatorApiConfig.set(config.config);
         isLoading = false;
